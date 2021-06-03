@@ -1,0 +1,80 @@
+I am Sagar. I am having 9 years of experience in various technologies devops , release management, production support ,TEMS Consultant
+
+Well coming to my skills sets : 
+Source code management : GIT
+OS Platform: Windows and Linux
+CI/CD : Jenkins 
+Application server: Weblogic and tomcat 
+Test automation : Katalon Studio
+Managment tools: JIRA for Defect tracking and confluence page 
+Cloud Platform: AWS
+Configuration management tool: Ansible 
+
+Well, Coming to my Roles and Responsibilities 
+Currently iam leading two projects 
+
+Application Monitoring and Daily Health check.
+Split my work into two 
+
+Helpdesk for Non production environment support  and coordination for release management activity
+
+********************************************************
+************************Why we hire you ********************8
+Why do you want to leave current job
+Willingness to develop new Skills 
+Plan to learn, grow and explore new opportunities 
+Desire to get more new responsibilities and job role 
+**********************************************************************
+
+Continuous integration is usually the process when code changes made by different developers are integrated into the main code branch as soon as possible. It is usually done several times a day. The process ensures that code changes committed by individual developers do not divert or impact the main code branch. When combined with automated testing, it ensures that your code is dependable and can be moved into the next phase, i.e. testing or production.
+
+Continuous deployment is somewhat similar to continuous integration. It is the process where your application can be deployed at any time to production or test environment if the current version passes all the automated unit test cases.
+
+Continuous delivery is the methodology where your codebase can be deployed at any time. Apart from ensuring that your application has successfully passed all automated test cases, it also saved the configuration required to deploy the code in production, resulting in a faster application development lifecycle.
+
+********************************************************************************************************
+
+Devops 
+DevOps is a culture that allows the development and the operations team to work together. This results in continuous development, testing, integration, deployment, and monitoring of the software throughout the lifecycle.
+
+Agile is a software development methodology that focuses on iterative, incremental, small, and rapid releases of software, along with customer feedback. It addresses gaps and conflicts between the customer and developers.
+
+*******************************************************************************************************
+The various phases of the DevOps lifecycle are as follows:
+
+Plan - Initially, there should be a plan for the type of application that needs to be developed. Getting a rough picture of the development process is always a good idea.
+Code - The application is coded as per the end-user requirements. 
+Build - Build the application by integrating various codes formed in the previous steps.
+Test - This is the most crucial step of the application development. Test the application and rebuild, if necessary.
+Integrate - Multiple codes from different programmers are integrated into one.
+Deploy - Code is deployed into a cloud environment for further usage. It is ensured that any new changes do not affect the functioning of a high traffic website.
+Operate - Operations are performed on the code if required.
+Monitor - Application performance is monitored. Changes are made to meet the end-user requirements.
+
+The following standard approaches can be used to implement DevOps in a specific project:
+
+Stage 1
+An assessment of the existing process and implementation for about two to three weeks to identify areas of improvement so that the team can create a road map for the implementation.
+
+Stage 2
+Create a proof of concept (PoC). Once it is accepted and approved, the team can start on the actual implementation and roll-out of the project plan.
+
+Stage 3
+The project is now ready for implementing DevOps by using version control/integration/testing/deployment/delivery and monitoring followed step by step.
+
+***********************************************************************************************************************
+https status :
+
+Status codes are issued by a server in response to a client request made to the server
+ 1xx  Informational 
+ 2xx  Success
+ 3xx  Redirectional 
+ 4xx  client error 
+	400 bad request
+	401 unauthorized 
+	403 forbidden
+	404 not found 
+ 500xx internal server error 
+
+***************************************************************************************************************************
+

@@ -1,0 +1,117 @@
+Inrerview questions 
+
+Git track the changes you nake to files so you have a record of what has been done,and you can revert to specific version.
+GIT also makes collaboration easier,allowing chnagesby multiple people to all be merged into one source 
+****************************************************
+3. difference between git pull and git fetch?
+git pull : it performs two functions using a single command. It featches all the changes that were made to the remote branch and then merge those chnages into your local branch.
+git pull = git fetch + git merge
+git fetch: git fetch only half of work of git pull. it just brings the remote changes into your local repo but does not apply them onto your branches.you have to explicitly apply those chnages.
+#############################
+4. How to clone specific branch in git?
+git branch -a 
+git clone -b <branch name> --single branch <Clone Link>
+#########################################################
+2. Let's say i have maven repo cloned on to my local, did some changes and i have build the code now target folder will be generated. So now when i do git operations like git add, git commit or any other git operations target folder should not be considered, how would you achieve the same?
+.gitignore 
+###################################
+Creating a repository on git
+create a folder on local
+git init . (. current location)
+git add filename 
+git add .   (add files from working area to staging area)
+git status (show the current status of files red color : Untracked files, Green color : added files into staging area)
+git log (show the commited changes history)
+git commit -m "adding files" (-m flag represent commit ID)
+Git diff : Compare changes of working direcotry with Staging area(b stands for staging area)
+git diff --staged -- compare changes of Staging area with Local repository
+git diff --HEAD     Compare changes of working directory with Local repository
+
+############################################
+Associated local repo with remote repo
+Create a new Local repository 
+create a folder 
+git init.
+add files git add --all (Adding files in staging area)
+git commit -m "add files" (Adding files into local repo)
+On Github: create a same name repository : 
+git remote add origin git@github.com:sagarkulkarni1989/gitrepo.git
+git push -u origin master   (This command sends the committed changes of master branch to your remote repository)
+######################################################
+********Connecting to GitHub with SSH ******
+Reference Document
+https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+ssh-keygen (all options as default)
+start ssh agent
+eval `ssh-agent -s`
+Add your SSH private key to the ssh-agent
+ssh-add ~/.ssh/id_rsa
+add key into github setting 
+##############################################################
+Revert changes on GIT
+Revert changes from working directory
+git restore <File Name>    OR
+git checkout --<File Name>
+
+Revert changes from Staging area
+git restore --staged <file name>  - to revert from staging to working area
+git restore <File name> - restore from working area
+
+Revert changes from Local repository
+git reset HEAD~  --to revert changes from local repo to working directory
+git restore <File name>  
+
+###########################################################
+git --version
+git config  This command sets the author name and email address respectively to be used with your commits
+git init .  This command is used to start a new repository
+git add     This command adds a file to the staging area
+git status  This command lists all the files that have to be committed
+git log     This command is used to list the version history for the current branch
+git commit  Add changes to local repository
+Git diff    Compare file with working directory to staging area
+git diff --staged Compare files are in staging area with local repository
+git diff --HEAD  compare with working directory to local repository
+git clone  This command is used to obtain a repository from an existing URL
+git push   This command sends the committed changes of master branch to your remote repository
+git pull   This command fetches and merges changes on the remote server to your working directory
+Git show   This command shows the metadata and content changes of the specified commit
+Git annotate Annotate file lines with commit information
+Git checkout <Commit ID>
+Git switch -
+Blame  help you to determine who made changes to a file  (This is on your git remote repository)
+git branch
+git branch <New Branch Name> Git branch Test
+git checkout <Branch name>  git checkout Test
+git tag  - This command is used to give tags to the specified commit
+
+###################################################
+Repository Setup in the Real-World
+Create a Private repository
+Create 3 branches(PROD, UAT and Dev)
+Add teamas collaborators to this repository.
+Enable SSH based authentication
+Protect Prod and UAT branches
+1 approval needed to check-in code on UAT and 2 approvals needed to check-in code on to Prod.
+Build and deploy should be successful before check-in the code onto UAT as well as onto prod.
+#####################################################
+yum install git
+git --version
+git config --global user.name "Sagar"
+git config --global user.email "Sagar@gmail.com"
+git config --list
+git clone <Repository URL>
+
+issue#ssl certificate problem unable to get local issuer certificate git
+resolution: git config --global http.sslVerify false (completely disable SSL verification.)
+
+git push origin master 
+git pull (take the latest changes from repository)
+
+- 
+in .git directory config file will be updating with origin repo details
+
+Git show This command shows the metadata and content changes of the specified commit
+git show <commit ID
+Git annotate <File Name>  
+ 

@@ -1,0 +1,157 @@
+**************************Jenkins Interview qustions***************
+
+Defile the jenkins process ****
+Developer : commit changes to the source code report
+Jenkins server: Jenkins check the shared repository at periodic interval and every check in is pulled and then build 
+Selenium/test server: Jenkins deployes the build application on the test server
+Production server: Build application then deployed on prod server.
+#####################################################
+Benifits of Jenkins
+cache build failures
+automatic build report notification 
+Achieve continuous integration 
+Automation of maven project 
+easy tracking of bugs 
+#####################################################
+1] useful plugins 
+   Maven2 project  Git Amazon EC2  Copy artifacts 
+2] Maven is a build management tool,its uses a simple pom.xml to configure all the dependencies needed to build,test and run the code.
+3] Start jenkins  jenkins.exe start , stop & restart 
+4] Define post in jenkins: post is a section that contains several additional steps that might execute after the completation of the pipeline.
+5] How will you secure jenkins   Authentication  Authorization  role based access control 
+6] Pipeline in Jenkins  Pipeline pligin is used in jenkins for making the jenkins pipeline,which gives us the view of sages or tasks to perform one after the other in the pipeline form.
+7] All the settings ,logs and configurations are stored in the Jenkins_Home directory.
+8] What type of pipeline  CI CD pipeline Declarative pipeline
+9] Pipeline as a code describes a set of features that allow jenkins user to define pipelined job processes with code,
+
+Pipeline: User-defined model of a CD pipeline. The pipeline's code defines the entire build process, which includes building, testing and delivering an application
+Node: A machine that is part of the Jenkins environment and capable of executing a pipeline
+Step: A single task that tells Jenkins what to do at a particular point in time
+Stage: Defines a conceptually distinct subset of tasks performed through the entire pipeline (build, test, deploy stages)
+agent 
+
+Configure jenkins node agent to communicate with jenkins master?
+two ways : browser and command line 
+jnlp java webstart file 
+##########################################################
+Various Options to create Jenkins job.
+1] Freestyle project
+	This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.
+2] Pipeline
+	Orchestrates long-running activities that can span multiple build agents. Suitable for building pipelines (formerly known as workflows) and/or organizing complex activities that do not easily fit in free-style job type.
+3] Multi-configuration project
+	Suitable for projects that need a large number of different configurations, such as testing on multiple environments, platform-specific builds, etc.
+4] Folder
+	Creates a container that stores nested items in it. Useful for grouping things together. Unlike view, which is just a filter, a folder creates a separate namespace, so you can have multiple things of the same name as long as they are in different folders.
+5] GitHub Organization
+	Scans a GitHub organization (or user account) for all repositories matching some defined markers.
+6] Multibranch Pipeline
+	Creates a set of Pipeline projects according to detected branches in one SCM repository.
+7] Copy from If you want to create a new item from other existing, you can use this option:
+##############################################################################
+Various Configuration options in Jenkins jobs
+1] General
+		Discard old builds
+			Build age: discard builds when they reach a certain age; for example, seven days old.
+			Build count: discard the oldest build when a certain number of builds already exist.
+		GitHub project
+		This build requires lockable resources
+		This project is parameterized
+			Parameters allow you to prompt users for one or more inputs that will be passed into a build. 
+			Boolean Parameter
+			Choice Parameter
+			Credentials Parameter
+			password parameter
+			String parameter
+		Throttle builds
+		Disable this project
+			When this option is checked, no new builds of this project will be executed.
+		Execute concurrent builds if necessary
+			When this option is checked, multiple builds of this project may be executed in parallel.
+			
+2]Source Code Management
+	Git
+		The git plugin provides fundamental git operations for Jenkins projects. It can poll, fetch, checkout, and merge contents of git repositories.
+
+3] Build Triggers
+	Trigger builds remotely (e.g., from scripts)
+	Build after other projects are built
+		Set up a trigger so that when some other projects finish building, a new build is scheduled for this project. 
+	Build periodically
+	GitHub hook trigger for GITScm polling
+	Poll SCM
+		Configure Jenkins to poll changes in SCM.
+	
+4] Build Environment
+	Delete workspace before build starts
+	Use secret text(s) or file(s)
+	Abort the build if it's stuck
+	Add timestamps to the Console Output
+	Inspect build log for published Gradle build scans
+	With Ant
+
+5] Build
+	Execute Windows Batch command
+	Execute Shell
+	Invoke Ant
+	Invoke Gradle Script
+	Invoke top level maven target
+
+6]Post Build options
+	Build other projects
+	Publish Junit test result report
+	email Notification 
+############################################################################
+Manage Jenkins 
+1]System Configuration 
+	Configure System
+	Global Tool Configuration 
+	Manage Plugin 
+	Manage Nodes and Cloud 
+
+2]Security 
+	Configure Global Security 
+	Manage Credentials 
+	Configure Credential provider
+	Manage users 
+
+3]Status Information 
+	System information 
+	System Logs
+	About Jenkins 
+
+4]Troubleshooting 
+	Manage Old Data
+
+5]Tools and Action 
+	Reload configuration from Disk 
+	Jenkins CLI 
+	Script Console 
+	Prepare for Shutdown 
+################################################################################
+How CI acheved using jenkins 
+Split the entire chunk of codes into segments 
+keep small segments of manageble code 
+integrate the segmented code multiple times a day
+adopt a CI methodology to coordinate with your team.
+
+Blue ocean in Jenkins 
+it is a project that was started with the purpose to rethink the user experience of jenkins,modeling and presenting th process of software delivery by surfacing information thats important to development team.
+########################################################################################
+Java installation and environment variable set
+yum install java-1.8*
+java -version 
+find /usr/lib/jvm/java-1.8* | head -n 3
+# To set it permanently update your .bash_profile
+vim ~/.bash_profile
+source ~/.bash_profile
+#####################################################################################
+
+
+
+
+
+
+
+
+
