@@ -1,5 +1,4 @@
 Ansible 
-
 Why Configuration Management 
 Configuration management 
 Provisioning 
@@ -56,6 +55,8 @@ Main Purpose of this file o customize your confugurations.
 remote_tmp= ~/.ansible/tmp  (Ansible required some space on managed node to execute commands, by default its under home/<ansible created user dir/.ansible>)
 local_tmp=~/.ansible/tmp    
 forks=5 (Ansible uses default server batch to execute any command)
+poll_interval= 15  (Wait time on nodes, if its not recived any response,then its returns result , node is not reachable something)
+retry_files_save_path = ~/.ansible-retry (not executed command node list)
 
 What is Inventory 
 Ansible works against multiple managed nodes or "hosts" in your infrastructure at the same time,usinga list or group of lists knows as inventory.
