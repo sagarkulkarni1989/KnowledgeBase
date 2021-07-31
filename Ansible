@@ -1,0 +1,89 @@
+Ansible 
+Why Configuration Management 
+Configuration management 
+Provisioning 
+Application Deloyment 
+Orchestration 
+Uptime and site Reliability 
+
+CM Tools  CHEF Ansible SaltStack  Puppet 
+
+What is Ansible 
+Radically simple open source IT automation engine.
+Advantages 
+Simple 
+	Human Readable 
+	No Special Code skills 
+	Tasks executed in order 
+Powerful 
+	Configuration 
+	App Deployment 
+	Provisioning 
+	Orchestration 
+Agentless 
+	Use OpenSSH
+	Secure
+
+How Ansible Works
+Control Node --ssh ---node1 
+
+Ansible Terminology 
+Control Node: Any Machine with Ansible installed. 
+Managed Nodes : The network device(Servers) you manage with Ansible 
+Inventory : A list of managed nodes.An inventory file is also sometimes called a 'hostfile'
+Modules : The units of code Ansible executes. Each modules has a particular functionality. 
+Tasks: The Unit of  action in Ansible.
+Playbooks: Ordered list of tasks.
+
+Lab Setup 
+Prepare Ansible Server 
+	Setup EC2 instance 
+	Setup hostfile
+	Create ansadmin user 
+	Add user to sudoers file --visudo 
+	Generate ssh keys
+	Enable password based login : vi etc/ssh/sshd_config
+	install ansible  
+
+__________________________________________________
+Class 2
+Ansible Componets
+/etc/ansible/ansible.cfg : 
+all ansible Default configurations
+All Ansible command refer default values while executing from ansible.cfg file
+Main Purpose of this file o customize your confugurations.
+remote_tmp= ~/.ansible/tmp  (Ansible required some space on managed node to execute commands, by default its under home/<ansible created user dir/.ansible>)
+local_tmp=~/.ansible/tmp    
+forks=5 (Ansible uses default server batch to execute any command)
+poll_interval= 15  (Wait time on nodes, if its not recived any response,then its returns result , node is not reachable something)
+retry_files_save_path = ~/.ansible-retry (not executed command node list)
+
+What is Inventory 
+Ansible works against multiple managed nodes or "hosts" in your infrastructure at the same time,usinga list or group of lists knows as inventory.
+Inventory file is a collection of Hosts(Nodes) which are managed by ansible control node
+
+	
+Inventory /host : Managed server information
+Tasks: which we are executing on managed servers
+Playbook 
+
+Ansible Basics 
+All ansible commands start with "ansible"
+Ansible default configuration file exists under /etc/ansible/ansible.cfg
+Default inventory file available under /etc/ansible/hosts
+Managed Nodes information should be availale in inventory file.
+
+Ansible Ad-hoc commands
+Ping  Basic command to check the managed nodes connections
+Command 
+	ansible all -m command -a "uptime"  (we can provide any linux command)
+				  "ls -lrt"
+Stat  its will give you detailed statastic data about that file
+	ansible all -m stat -a "path=/home/ansible/testfile"
+yum : used to install software on target nodes
+	ansible all -m yum -a "name=git" -b   (-m Module a= Attribute , -b become run the command as a root user)
+User : Its used to create an user on target nodes
+	ansible all -m user -a "name=modi" -b (-b)
+setup : Gather all the system related information
+	ansible all -m setup
+
