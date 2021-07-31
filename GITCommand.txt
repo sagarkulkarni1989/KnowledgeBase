@@ -1,6 +1,6 @@
 Inrerview questions 
 
-Git track the changes you nake to files so you have a record of what has been done,and you can revert to specific version.
+Git track the changes you make to files so you have a record of what has been done,and you can revert to specific version.
 GIT also makes collaboration easier,allowing chnagesby multiple people to all be merged into one source 
 ****************************************************
 3. difference between git pull and git fetch?

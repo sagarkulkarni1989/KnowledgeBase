@@ -1,0 +1,389 @@
+**********************************************************************************
+Introduction 
+About
+Project and Tools stack
+Roles and Responsibilities
+**********************************************************************************
+1] Continious Intrgration 
+	Continuous integration (CI) is the practice of automating the integration of code changes from multiple contributors into a single software project
+2] Conunious Delivery 
+	After the CI process, deploying on a prod like env and running automation tests to ensure the build is ready for release.
+	Ensures the build is always in a deployable 
+3] Continuous Deployment 
+	Automated Deployment to prod. Every change that passes through Automation Tests is deployed to production 
+**************************************************************************************
+GIT 
+1] Git Stash
+		Tempororary Storage 
+		To Stash an item(Only applies to modified files not new files)
+		To stash an item : git stash
+		To see stashed item : git stash list 
+		to Apply stashed items  git stash apply stash@{1}
+		then you can add and commit 
+		To clear the stash items 
+		git stash clear
+2] Merge
+		You cant Merge Branches of different Repositories.
+		We use pulling mechnism to Merge Branches
+		git checkout Master  be on Master brach where you want to merge 
+		List out Branch name : git branch 
+		Create a new Branch :  git branch <Branch name>
+		To switch Branch: git checkout <branch Name>
+		git merge Branch1
+		
+3] Merge Conflict 
+		When same file having different content in different branches, if you want to merge, conflict occures (Resolve conflict and then add and commit)
+		Error Eg. CONFLICT (add/add): Merge conflict in Nihira
+
+		
+4] Revert changes from working directory
+		git restore <File Name>    OR
+		git checkout --<File Name>
+
+5] Revert changes from Staging area
+		git restore --staged <file name>  - to revert from staging to working area
+		git restore <File name> - restore from working area	
+6] Revert changes from Local repository
+		git reset HEAD~  --to revert changes from local repo to working directory
+		git restore <File name>  
+
+7] Blame  help you to determine who made changes to a file  (This is on your git remote repository)
+8] Git show This command shows the metadata and content changes of the specified commit : git show <commit ID
+9] git remote add origin git@github.com:sagarkulkarni1989/gitrepo.git
+10] git push -u origin master   (This command sends the committed changes of master branch to your remote repository)	
+
+**************************************************************************************
+Maven
+- Clean  This command cleans the maven project by deleting the target directory
+- validate This command validates the maven project that everything is correct and all the necessary information is available.
+- compile This command compiles the java source classes of the maven project
+- test-compile This command compiles the test classes of the maven project
+- package This command builds the maven project and packages them into a JAR, WAR, etc
+- verify  run any checks to verify the package is valid and meets quality criteria.
+- install This command builds the maven project and installs the project files (JAR, WAR, pom.xml, etc) to the local repository.
+ deploy This command is used to deploy the artifact to the remote repository
+
+
+**************************************************************************************
+	
+	
+**************************************************************************************
+Jenkins : 
+1] Master Slave configuration
+	Manage node 
+	Create a one user on slave machine
+	Generate the ssh key on slave machine (generate public and private keys)
+	copy to public key on authorozed_keys file
+	chmod 700 authorized_keys
+	Copy slave nodes public key(id_rsa.pub )to master nodes known hosts
+
+2]Roles based security 
+3]Global tool configuration
+4]Plugins 
+	Ansible Nexus Artifact Uploader
+5]Role based security 
+6] Global credentials 
+7] Jenkins Pipeline 
+8] Various Options to create Jenkins job.
+	Freestyle project
+	Pipeline
+	Multi-configuration project
+	Multibranch Pipeline
+	Copy from If you want to create a new item from other existing, you can use this option
+9] Various Configuration options in Jenkins jobs
+	Discard old builds
+	This project is parameterized
+	Source Code Management
+	Build Triggers(GitHub hook trigger for GITScm polling,Poll SCM)
+	Post Build options
+	Publish Junit test result report
+	
+10]Manage Jenkins 
+	Global Tool Configuration 
+	Manage Plugin
+	Configure Global Security
+	Configure Credential provider
+	Manage users 
+######################Pipeline Example##################################
+
+Pull From GIThub Repo ---> Build App Source --> Execute SonarQube QA --> Artifact upload --> Deploy Ansible
+
+
+pipeline {
+	agent any 
+	tools 
+	//Install maven 
+	maven "maven"
+
+	environment {
+       	 NEXUS_VERSION = "nexus3"
+        	NEXUS_PROTOCOL = "http"
+        	NEXUS_URL = "you-ip-addr-here:8081"
+        	NEXUS_REPOSITORY = "maven-nexus-repo"
+        	NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
+    }
+	Stages {
+		stage ('SCM checkout')
+		step{
+			git "location"        // you can generate pipeline syntax
+			}
+		stage('Build')
+			step {
+				sh 'mvn package'
+			
+			}
+		stage (Sonarqube test)   Sonarqube 
+			steps {
+			sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+			}
+
+
+ stage("Publish to Nexus Repository Manager") {
+            steps {
+                script {
+                    pom = readMavenPom file: "pom.xml";
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    artifactPath = filesByGlob[0].path;
+                    artifactExists = fileExists artifactPath;
+                    if(artifactExists) {
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
+                            ]
+                        );
+                    } else {
+                        error "*** File: ${artifactPath}, could not be found";
+                    }
+                }
+
+
+		stage (Execute Ansible Playbook)
+			steps{
+				
+			}
+SonarQube (formerly Sonar)[3] is an open-source platform developed by SonarSource for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities
+##########################################################
+
+**********************************************************
+1] Definition of Docker 
+Docker is a tool to make it easier to create,deploy and run applications by using containers.
+
+2] Docker Image
+	Read only Template used to create containers.
+	Contains all application Dependencies
+	Build by Docker Users
+	Stored In Docker hub on your Local Registry
+
+3] Containers
+	Isolated Application Platform
+	Containes Everything Need to Run The Application.
+
+#########################Docker Commands
+1] Docker Installation on Linux EC2 : sudo yum install docker
+2] Start the Docker Service : 	sudo service docker start
+3] Add the ec2-user to the docker group so you can execute Docker commands without using sudo.   sudo usermod -a -G docker ec2-user
+4] Start a Container : 		docker run <Image name> docker run nginx 
+5] list Containers : docker ps -a  (-a will give active and non active containers list)
+6] Remove a container:  docker rm container name 
+7] List of images :  docker images
+8] Remove Images : docker rmi nginx   (Delete all dependent containers to remove image )
+9] Pull Download an image (Dont run the container): docker pull nginx
+10] run - tag - by default docker download/run latest version of image, if want to specific version then use tag
+	docker run redis:4.0
+12] Inspect Containers (Details about container) docker inspect <Container name>
+13] Containers Logs : docker logs <Container name or ID>
+14] Environment Varialbe in docker : docker run -e <Variable_name>=Value <Application name>
+		How to find the environment varibles: docker inspect <Docker name>
+15] login to container : docker exec -it <Container Name> <Container Command>
+
+##########################################################################################
+Dockerfile
+Docker file builds a Docker image and that image contains all the project code. you can run that image to create as many Docker containers as you want.
+Dockerfile is basically a text file it containes set of Instruction (Its specified in Capital Letters) and Argument
+Components 
+	FROM : for base image. This command must be on top of the dockerfile
+	RUN : To Execute Command, it will create a layer in image. install all dependencies 
+	MAINTER : Author/Owner/Description
+	COPY : Copy  files from local system. we need to provide Source and destination(We cant download files from internet and only remote repo)
+	ADD: Similar to COPY but it provides a featureto download files from internet also we extrack file at docker side
+	EXPOSE: to expose ports such as port 8080 for tomcat, port 80 for nginx etc 
+	WORKDIR: To Set working directory for Container
+	CMD: Execute Commands but during command Creation.
+	ENTRYPOINT: Similar to CMD, but has higher priority over CMD. first command will be executed by ENTRYPOINT only.
+	ENV: Environment Varibles
+
+################################Example 1 
+DockerFile Example#1 
+FROM ubuntu
+WORKDIR /tmp
+RUN echo "Created second Dockerfile for practical" > /tmp/testfile
+ENV myname Sagar Kulkarni
+COPY testfile1 /tmp
+ADD test.tar.gz /tmp
+
+###################################Example 2 
+FROM centos:latest
+MAINTAINER NewstarCorporation
+RUN yum -y install httpd
+COPY index.html /var/www/html/
+CMD [“/usr/sbin/httpd”, “-D”, “FOREGROUND”]
+EXPOSE 80
+#############################################
+Command to create image out of dockerfile 
+	docker build -t <image name> .  (Syntax)
+	doker build -t test .
+
+6] Now create a Container from the above image 
+	docker run -it  --name (New container name) <Image name> /bin/bash
+	docker run -it --name mycontainer myimg /bin/bash
+
+1] Create one container first 
+	docker run -it --name Sagarkulkarni ubuntu /bin/bash
+	cd /tmp 
+	Create one file inside tmp directory
+2] f you want to see the different below the base image and changes on it then 
+	docker diff Sagarkulkarni <container name>
+	(C Change A Append/Addition)
+
+3] Now create image of this Container 
+	docker commit <container name> <image Name>   docker commit SagarKulkarni updateimage
+4] Now create container from this image 
+	docker run -it --name rajcontainer updateimage /bin/bash
+************************************************************************************************************
+Ansible playbook 
+Radically simple open source IT automation engine.
+1] Ansible Terminology 
+	Control Node: Any Machine with Ansible installed. 
+	Managed Nodes : The network device(Servers) you manage with Ansible 
+	Inventory : A list of managed nodes.An inventory file is also sometimes called a 'hostfile'
+	Modules : The units of code Ansible executes. Each modules has a particular functionality. 
+	Tasks: The Unit of  action in Ansible.
+	Playbooks: Ordered list of tasks.
+2] Ansible Componets: /etc/ansible/ansible.cfg
+	All Ansible command refer default values while executing from ansible.cfg file
+	Main Purpose of this file to customize your confugurations.
+	remote_tmp= ~/.ansible/tmp  (Ansible required some space on managed node to execute commands, by default its under home/<ansible created user dir/.ansible>)
+	local_tmp=~/.ansible/tmp    
+	forks=5 (Ansible uses default server batch to execute any command)
+	poll_interval= 15  (Wait time on nodes, if its not recived any response,then its returns result , node is not reachable something)
+	retry_files_save_path = ~/.ansible-retry (not executed command node list)
+
+3] What is Inventory 
+	- Ansible works against multiple managed nodes or "hosts" in your infrastructure at the same time,usinga list or group of lists knows as inventory.
+	Inventory file is a collection of Hosts(Nodes) which are managed by ansible control node
+	- All ansible commands start with "ansible"
+	- Ansible default configuration file exists under /etc/ansible/ansible.cfg
+	- Default inventory file available under /etc/ansible/hosts
+	- Managed Nodes information should be availale in inventory file.
+
+4] Ansible Ad-hoc commands
+	- Ping  Basic command to check the managed nodes connections
+	- Command 
+		ansible all -m command -a "uptime"  (we can provide any linux command)
+				  "ls -lrt"
+	- Stat  its will give you detailed statastic data about that file
+		ansible all -m stat -a "path=/home/ansible/testfile"
+	- yum : used to install software on target nodes
+		ansible all -m yum -a "name=git" -b   (-m Module a= Attribute , -b become run the command as a root user)
+	- User : Its used to create an user on target nodes
+		ansible all -m user -a "name=modi" -b (-b)
+	- setup : Gather all the system related information
+		ansible all -m setup
+Ansible setup 
+	Ansible Control Node 
+	Create ansadmin user
+		useradd ansadmin
+		passwd ansadmin 
+	add user to sudoers file to provide additional priviliges to your user : visudo
+	Enable Paasword based authentication for ansadmin user : vi /etc/ssh/sshd_config
+	Generate ssh keys for ansadmin user sudo su - ansadmin  (/home/ansadmin) : ssh-keygen (It will generate private and public key (id_rsa, id_rsa.pub))
+	(When we create new ec2 instance we download private key and in ec2-user in authentication key - public key)
+Normal Ec2 Instance login process 
+User(Private Key) -- EC2 Instance Public Key(Authorization Key)	
+In Ansible 
+Ansible server (Private key) copy Public key into managed nodes	
+Ansible installation : Python is prerequisite:
+
+copy public key file from ansible to node - authoriation keys
+
+ansible all -m ping   (-m stand for module)
+
+Playbook 
+	A playbook is a text file written in YAML .yml 
+##############################################Example ##############################
+---
+  - name: Playbook
+    hosts: webservers
+    become: yes
+    become_user: root
+    tasks:
+      - name: ensure apache is at the latest version
+        yum:
+          name: httpd
+          state: latest
+      - name: ensure apache is running
+        service:
+          name: httpd
+          state: started
+Ansible Roles
+
+************************************************************************************************************
+Kubernetes
+Kubernetes is an open source container management tool which automates container deployment, container scaling and load balancing.
+It schedules,runs and and manages isolated containers which are running on virtual/physical/Cloud Machines.
+Orchestration(Clustering of any no of containers running on different n/w)
+
+Control Plane Components 
+1] kube-apiserver((for all communication)
+	This api-server interacts directly with user(i.e we apply .yml or Json manifest to kube-api-server)
+	kube api-server is front end of control plane
+2] etcd
+	etcd is consistent and high-availabe store(key-volume store).Stores metadata and status of cluster
+3] Kube-scheduler (Action)
+	When users make request for the creation and management of pods, kube scheduler is going to the action on these requests
+	Handles Pod creation and management
+	A scheduler watches for newly created pods that have no node assigned for every pod that the scheduler discover, the scheduler becomes responsible for finding 	best node for that pod to run on.
+4] Controller manager
+	make sure actual state of cluster matches to desired state. 
+	Two possible choises for controller Manager
+		1] If k8s on cloud, then it will be Cloud-controller manager
+		2] If k8s on non cloud then it will be kube controller manager
+	Some types of these controllers are:
+	Node controller: Responsible for noticing and responding when nodes go down.
+	Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion.	
+	
+NODE:
+	Node is going to run 3 imprtant piece of software
+
+1] Kubelet
+	An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
+2] kube-proxy
+	kube-proxy is a network proxy that runs on each node in your cluster 
+	kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your 	cluster.
+3] Container runtime
+	The container runtime is the software that is responsible for running containers.
+
+
+POD : Smallest unit in kubernets 
+Kubernetes only knows about PODs(does not know about indivitual containers)
+Cannot start containers without a Pod
+One POD usually contains one Container
+A cluster is a group of nodes 
+A cluster has atleast one worker node and master node 
+Consists of one or more tightly coupled cotainers 		

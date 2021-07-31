@@ -1,0 +1,160 @@
+Microservices us that same type of applications become easier to build and maintain when they are broken down into smaller,composable pieces which work together.Each components is developed separately, and the application is then simply the sum of its constituent components.
+For emaple an online shop with separate microservices for user account, product catalog order processing and shopping carts.
+
+Hypervisor : Hypervisor is a piece of software or firmware that creates and run virtual machine. A hypervisor is sometimes also called virtual machine manager<VMM)
+Example : Hyper-V, VMware 
+Oracle VirtualBox
+
+Type og Hypervisor : 
+Type1(Bare metal)
+Type2 (Hosted Hypervisor)
+
+What is Docker
+Docker is a tool to make it easier to create,deploy and run applications by using containers.
+Docker containers are lightweight alternatives to virtual Machines and its uses the host OS
+You dont have to pre-allocate any RAM in containers
+Docker is Advanced Version of Virtualization
+
+Docker Editions
+Community Editions
+Enterprise Editions
+
+Docker Image
+Read only Template used to create containers.
+Contains all application Dependencies
+Build by Docker Users
+Stored In Docker hub on your Local Registry
+
+Docker Container
+Isolated Application Platform
+Containes Everything Need to Run The Application.
+Share same OS 
+
+
+
+******************************Docker Commands*************************************88
+1] Docker Installation on Linux EC2 : sudo yum install docker
+2] Start the Docker Service : 	sudo service docker start
+3] Add the ec2-user to the docker group so you can execute Docker commands without using sudo.   sudo usermod -a -G docker ec2-user
+4] Start a Container : 		docker run <Image name> docker run nginx 
+5] list Containers : docker ps -a  (-a will show you running as well as stopped containers)
+6] Remove a container:  docker rm container name 
+7] List of images :  docker images
+8] Remove Images : docker rmi nginx   (Delete all dependent containers to remove image )
+9] Pull Download an image (Dont run the container): docker pull nginx
+10] Run -attach and detach 
+		docker run kodekloud/simple-webapp  it will run in foreground CTRL+C to quit
+		docker run -d kodekloud/simple-webapp  (Its run in background)
+ ****More about Docer Run command ******
+11] run - tag - by default docker download/run latest version of image, if want to specific version then use tag
+	docker run redis:4.0
+12] Inspect Containers (Details about container) docker inspect <Container name>
+13] Containers Logs : docker logs <Container name or ID>
+14] Environment Varialbe in docker : docker run -e <Variable_name>=Value <Application name>
+		How to find the environment varibles: docker inspect <Docker name>
+15] login to container : docker exec -it <Container Name> <Container Command>
+
+
+
+********Docker File********Layed Architecture ***************
+1] Dockerfile is basically a text file it containes set of Instruction (Its specified in Capital Letters) and Argument
+
+2] Docker also gives you the capability to create your own Docker images, and it can be done with the help of Docker Files. A Docker File is a simple text file with instructions on how to build your images.
+
+3] Automation of Docker image creation
+4] Docker Components
+	FROM : for base image. This command must be on top of the dockerfile
+	RUN : To Execute Command, it will create a layer in image. install all dependencies 
+	MAINTER : Author/Owner/Description
+	COPY : Copy  files from local system. we need to provide Source and destination(We cant download files from internet and only remote repo)
+	ADD: Similar to COPY but it provides a featureto download files from internet also we extrack file at docker side
+	EXPOSE: to expose ports such as port 8080 for tomcat, port 80 for nginx etc 
+	WORKDIR: To Set working directory for Container
+	CMD: Execute Commands but during command Creation.
+	ENTRYPOINT: Similar to CMD, but has higher priority over CMD. first command will be executed by ENTRYPOINT only.
+	ENV: Environment Varibles
+Failure  its uses cache, so it will run from on which layer its failed.
+***Practical LAB ************** 
+1] Create a file named Dockerfille
+2] Add Instruction in Dockerfile 
+3] Build dockerfile to create image 
+4] Run Image to create Container 
+
+DockerFile Example#1 
+FROM ubuntu
+WORKDIR /tmp
+RUN echo "Created second Dockerfile for practical" > /tmp/testfile
+ENV myname Sagar Kulkarni
+COPY testfile1 /tmp
+ADD test.tar.gz /tmp
+
+5] Command to create image out of dockerfile 
+	docker build -t <image name> .
+	doker build -t test .
+
+6] Now create a Container from the above image 
+	docker run -it  --name (New container name) <Image name> /bin/bash
+	docker run -it --name mycontainer myimg /bin/bash
+
+
+
+*******Practical Lab
+
+1] Create one container first 
+	docker run -it --name Sagarkulkarni ubuntu /bin/bash
+	cd /tmp 
+	Create one file inside tmp directory
+2] f you want to see the different below the base image and changes on it then 
+	docker diff Sagarkulkarni <container name>
+	(C Change A Append/Addition)
+
+3] Now create image of this Container 
+	docker commit <container name> <image Name>   docker commit SagarKulkarni updateimage
+4] Now create container from this image 
+	docker run -it --name rajcontainer updateimage /bin/bash
+
+	
+
+*********Docker Storage :
+By Default Docker store into /var/lib/docker 
+drwx--x--x  4 root root  120 Jul 24 10:26 buildkit
+drwx-----x  8 root root 4096 Jul 24 23:56 containers
+drwx------  3 root root   22 Jul 24 10:26 image
+drwxr-x---  3 root root   19 Jul 24 10:26 network
+drwx-----x 35 root root 4096 Jul 24 23:56 overlay2
+drwx------  4 root root   32 Jul 24 10:26 plugins
+drwx------  2 root root    6 Jul 24 10:26 runtimes
+drwx------  2 root root    6 Jul 24 10:26 swarm
+drwx------  2 root root    6 Jul 24 23:55 tmp
+drwx------  2 root root    6 Jul 24 10:26 trust
+drwx-----x  2 root root   50 Jul 24 10:26 volumes
+
+******Volume Mapping 
+All of the data we have stored will be deleted with the deletion of the container . ... To mitigate these problem we will be using docker volumes
+Two types of Mounting 
+Volume Mounting <Default location in volume location> and bind Mounting(Any location in base location)
+
+docker volume create data_volume   <its create default docker locaton /var/lib/docker>
+Mount volume 
+	docker run -v data_volume:/var/lib/mysql mysql   <data_volume is base location and /var/lib/mysql is docker container location>
+docker run \ --mount type=bind, source=/data/mysql, target=/var/lib/mysql mysql 
+Source : Base machine licatuon 
+Target : Container location 
+mysql is image name 
+
+*********Storage Driver 
+AUFS  default storage drive for linux
+ZFS 
+overlays
+overlays2 
+
+*********Docker Compose *********
+
+********Push Docker local image to docker hub 
+******Docker Swarm*******
+
+
+
+
+
+

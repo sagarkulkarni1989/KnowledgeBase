@@ -1,22 +1,69 @@
-I am Sagar. I am having 9 years of experience in various technologies devops , release management, production support ,TEMS Consultant
+I am Sagar. I am having 9 years of experience in IT industry with various tools and technologie Build and deployment using devops tools,Release Managment and TEMS Consultant.
 
-Well coming to my skills sets : 
-Source code management : GIT
-OS Platform: Windows and Linux
-CI/CD : Jenkins 
-Application server: Weblogic and tomcat 
-Test automation : Katalon Studio
-Managment tools: JIRA for Defect tracking and confluence page 
-Cloud Platform: AWS
-Configuration management tool: Ansible 
+Well 
+About My Project
+Currently i am workin on one of the candian retail project and leading two modules.
+1] Application Build and deployment using GIT Jenkins ,tomcat and Weblogic and Appdynamics for Server health check Monitoring. 
+2] Application health check Monitoring Using Katalon Studio and Jenkins pipeline , JIRA for defect tracking
 
-Well, Coming to my Roles and Responsibilities 
-Currently iam leading two projects 
+Roles and responsibilities
+Daily Goal : To all environments should be in running and healty state with minimum impact to ongoing project deadlines.
+As our team is owning environment management so all related activities comes unders our bucket.
+Environment provisioning, setup for build and deployment.
+Environment baselining after every enterprise releases. 
+Environment sanity before handover to upcoming releases.
+Daily environment issue - jenkins build logs analysis, Test report analysis, application logs analysis, based on that coordinate with respective team to fix those on priority.
+decommissioning the unused instances.
+Part of application scrum calls.
+We are following all ITIL principles and agile methodologies.
 
-Application Monitoring and Daily Health check.
-Split my work into two 
+From Security and quality check
 
-Helpdesk for Non production environment support  and coordination for release management activity
+develop applications based on secure coding guidelines.  improper error handling
+Standardized coding practices
+Code Quality Assurance tool: SonarQube, 
+Source code Management team: Maintain Access , Pull request
+Appropriate use of strong encryption for data in databases
+Masking confidential data that needs to be viewed in part
+Support for strong passwords and two-factor authentication where appropriate
+Role-based access control and revocation of rights, with clear roles mapped to permissions.
+
+Appdynmics 
+AppDynamics is a leading Application Performance Management (APM) product. It is a tool that monitors your Application Infrastructure and gives you code level visibility.
+Overall Application Performance 
+Application Infrastrucure performance 
+Business transaction Performance 
+Application performance monitoring (APM) is a section of IT that ensures applications are performing as expected. ... Application monitoring tools give administrators the information they need to quickly figure out issues that negatively impact an application's performance
+
+
+Apart from this i am doing , release management tasks, Weekly report preparation, present with client. part of process enhancement team to find out the area for where we can do improvment.
+
+Conunious Delivery 
+After the CI process, deploying on a prod like env and running automation tests to ensure the build is ready for release.
+Ensures the build is always in a deployable 
+
+Continuous Deployment 
+Automated Deployment to prod. Every change that passes through Automation Tests is deployed to production 
+
+
+Dev -Test - Deploy 
+Maven for Code build
+SonarQube for Code Quality Check 
+Checkin code - Git - Pull code - dploy on test environment - Prod 
+
+
+
+
+Qualys VM(Vulnerability Management) is a cloud-based service that gives you immediate, global visibility into where your IT systems might be vulnerable to the latest Internet threats and how to protect them. It helps you to continuously identify threats and monitor unexpected changes in your network before they turn into breaches
+
+
+
+
+
+
+
+
+
 
 ********************************************************
 ************************Why we hire you ********************8
@@ -26,11 +73,6 @@ Plan to learn, grow and explore new opportunities
 Desire to get more new responsibilities and job role 
 **********************************************************************
 
-Continuous integration is usually the process when code changes made by different developers are integrated into the main code branch as soon as possible. It is usually done several times a day. The process ensures that code changes committed by individual developers do not divert or impact the main code branch. When combined with automated testing, it ensures that your code is dependable and can be moved into the next phase, i.e. testing or production.
-
-Continuous deployment is somewhat similar to continuous integration. It is the process where your application can be deployed at any time to production or test environment if the current version passes all the automated unit test cases.
-
-Continuous delivery is the methodology where your codebase can be deployed at any time. Apart from ensuring that your application has successfully passed all automated test cases, it also saved the configuration required to deploy the code in production, resulting in a faster application development lifecycle.
 
 ********************************************************************************************************
 
@@ -78,3 +120,9 @@ Status codes are issued by a server in response to a client request made to the 
 
 ***************************************************************************************************************************
 
+Support for strong passwords and two-factor authentication where appropriate
+Role-based access control and revocation of rights, with clear roles mapped to permissions. 
+Event logs and audit trails available only to system administrators and protected from
+unauthorized modifications.
+Source code managment 
+preventing external threats to maintain the integrity of the network. The second deals with reducing internal risks by defining appropriate use of network resources.

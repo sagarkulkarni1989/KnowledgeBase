@@ -1,0 +1,80 @@
+AWS Services 
+Regions : Independent Geographic Area.
+Availability Zone: Multiple Isolated locations/data centers within a region
+Services on AZ level : EC2, RDS, EBS
+Services on Network level : VPC, ELB
+Region level : S3, DynamoDB
+Global : Billing,IAM, Route53
+
+Compute 
+	Amazon EC2 
+	Amazon Lambda
+	Amazon Virtual Private Cloud 
+	Amazon Elastic Beanstalk
+Storage 
+	Amazon S3 
+	Amazon Elastic Block 
+	Amazon Glacier
+	Amazon Snowball
+	Amazon Storage Gateway 
+Database 
+	Amazon Relational Ddatabase Services(RDS)
+	Amazon DynamoDB 
+	Amazon ElasticCache 
+Networking & Content Delivery 
+	Amazon CloudFront 
+	Amazon Route 53
+	Elastic Load Balancing
+Management Tools
+	Amazon CloudWatch
+	Amazon CloudFormation
+	Amazon CloudTrail 
+Security, Identity & Compliance
+	Amazon Identity and Access Management (IAM)
+	Amazon Cognito
+
+Cloud Service Model 
+IaaS - Infrastructure as a Service  
+	Service Provider Manager : Networking, Storage, Servers, Virtualization 
+	Consumer Manage : O/S, Middleware, Runtime, Data,Application
+Paas - Platform as a Service 
+	Service Provider Manager : Networking, Storage, Servers, Virtualization,O/S, Middleware, Runtime
+	Consumer Manage : Data,Application
+Saas - Software as a Service 
+	Service Provider Manager : Networking, Storage, Servers, Virtualization, O/S, Middleware, Runtime, Data,Application
+
+Networking Basics
+Network, IP, Subnet, Port, Protocol, Service, Damemon, Private IP, Public IP, Private Subnet and Public Subnet,Route Table 
+CIDR(Classless Inter Domain Routing)
+
+
+*********************************
+1 Basic Cloud services 
+Compute : To run any application, Control and manage server functions such as scaling and deployment. Ex EC2, Elastic Beanstalk,Lambda, Auto-scaling, Lightsail
+Storage : It holds all the information which the application use. They additionally support archival compliance requirement. Object,file and block storage are the popular storage services ex. S3, Glacier, Elastic Block Storage, Elastic File system.
+Netwrking: To control and manage the connectivity requirements for various AWS services: VPC, Route53, CloudFront
+		
+2] What is auto-scaling 
+Auto-scaling in AWS allow you to configure and automatically provision and launch new instances whenever the demand increases.
+Its allows automatic increase or decrease of resources capacity as per the needs	
+How do you upgrade or downgrade a system with near zero downtime?
+Open EC2 Console- Choose Operating System AMI-Launch an instance with new instace type - Install all updates - Install applications- Test the instance - Deploy the new instance and replace the older instance 
+
+3] How do you setup a system to monitor website metrics in real-time in AWS?
+Cloud Watch events helps us to monitor application status of various AWS services and custom events
+	State changes in EC2
+	auto-scalling lifecycle events
+	scheduled events
+	console sign in events
+4] Type of EC2 Instances
+	On Demand Instance 
+		These are EC2 Instances that are purchased a the fixed rate per hours
+
+5] Different between AWS S3 and EBS 
+	AWS S3 : Object Store, Fast,Across Data Centers,Using Public and Private Key
+	AWS EBS: FileSystem, Superfast,Can be used only with EC2
+6] How do you connect multiple sites to a VPC?
+	If you have multiple VPN connections, you can provide secure communication between sites the AWS VPN cloudhub
+7] How do you monitor Amazon VPC?
+	Cloud watch and cloudwatch Logs
+	VPC Flow Logs

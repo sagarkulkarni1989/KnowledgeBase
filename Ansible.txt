@@ -1,0 +1,181 @@
+
+What is Ansible 
+Radically simple open source IT automation engine.
+Advantages 
+Simple 
+	1] Human Readable 2] No Special Code skills 3] Tasks executed in order 
+Powerful 
+	1] Configuration 2] App Deployment 3]Provisioning  4]Orchestration 
+Agentless 
+	1] Use OpenSSH 2] Secure
+
+How Ansible Works
+Control Node --ssh ---node1 
+
+Ansible Terminology 
+Control Node: Any Machine with Ansible installed. 
+Managed Nodes : The network device(Servers) you manage with Ansible 
+Inventory : A list of managed nodes.An inventory file is also sometimes called a 'hostfile'
+Modules : The units of code Ansible executes. Each modules has a particular functionality. 
+Tasks: The Unit of  action in Ansible.
+Playbooks: Ordered list of tasks.
+
+######################################LAB Setup #################################################
+Setup EC2 Instance
+Setup hostname
+create ansadmin user
+add user to sudoers file 
+generate ssh keys
+Enable password based login 
+install ansible
+
+*******setup 3 instance 1] Ansible control node 2] Tomcat 3] rhcl
+Common Steps in all the instances
+1] Setup hostname 
+		/etc/hostname 
+2] Create ansadmin user
+	useradd ansadmin
+	passwd ansadmin 
+3] add user to sudoers file to provide additional priviliges to your user
+	visudo
+	Add into below tag 
+	## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+  ansadmin ALL=(ALL)       NOPASSWD: ALL
+
+4]  Enable Paasword based authentication for ansadmin user 
+ vi /etc/ssh/sshd_config
+ 
+ # To disable tunneled clear text passwords, change to no here!
+#PasswordAuthentication yes
+#PermitEmptyPasswords no
+PasswordAuthentication no
+
+5] Reload the configuration  -  service sshd reload 
+
+Below steps on Ansible control node server 
+Now establish connection between ansible server and Node
+6] Generate ssh keys for ansadmin user 
+          sudo su - ansadmin  (/home/ansadmin)
+
+(When we create new ec2 instance we download private key and in ec2-user in authentication key - public key)
+Normal Ec2 Instance login process 
+User(Private Key) -- EC2 Instance Public Key(Authorization Key)	
+In Ansible 
+Ansible server (Private key) copy Public key into managed nodes	
+  
+ssh-keygen    (just hit enter)
+It will generate private and public key (id_rsa, id_rsa.pub)
+
+7] Install Ansible
+	Check pythod is installed or not 
+		python --version
+		sudo yum install ansible   it will give new command to install ansible 
+		sudo amazon-linux-extras install ansible2
+    Check the ansible version  ansible --version 
+	  Default installation loaction : /etc/ansible
+  8] Create ssh connectivity between ansible server and node
+  copy public key file from ansible to node - authoriation keys
+  ssh-copy-id ansadmin@172.31.17.192
+ 
+8] Ansible Update host file with node details
+ansible all -m ping   (-m stand for module)
+
+ansible all --list-hosts
+ansible <group name> --list-hosts
+
+Ad-hoc commands, Modules and Playbook
+1] Ad-hoc Command (No Idempotency)
+
+	Ad-hoc commands are commands which can be run indivitually to perform quick function
+	These ad-hoc commands are not used for configuration management and deployment because the commands are of one time usage
+	Adhoc commands (Simple Linux commands can execute)
+	Commands 
+	ansible <group name>[o]
+	[0] Means first server of group
+	[-1] Means last server of group
+	ansible demo -ba "yum remove httpd -y"
+
+Modules (idempotency present) by default first setup module execute- its gather the information about nodes
+	Ansible Ships with a numbers of modules(Called Liabrary) that can be executed directly on remote hosts pr through playbooks
+	ansible demo -b -m yum -a "pkg=httpd state=present"  (for Install = Present , uninstall = absent and update = Latest)
+	ansible demo -b -m yum -a "pkg=httpd state=latest"
+	ansible demo -b -m service -a "name=httpd state=started"
+	ansible demo -b -m user -a "name=raj"
+	ansible demo -b -m copy -a "src=file4 dest=/tmp"
+	ansible demo -m setup 
+	
+Playbook  Both are written in YAML Language (Yet another markup Language)
+	Playbook in ansible are written in YAML Format.
+	It is human readable data
+	Playbook is like a file where you write codes.Cosists of vars, tasks, handlers, files templates and roles.
+	Each Playbook is compose  of one or more modules in a list module is collection of configuration file
+	Playbook are divided into 3 sections 
+		Target Section:  Define the host agaist which playbook task has to be executed
+		Variable Section  Define variable 
+		Task Section : List of all modules that we need to run in an order
+YAML 
+	For Ansible nearly every YAML files start with a list 
+	Each item in the list is a list of key-volume pairs commonly called a dictionary.
+	All YAML files hava to begin with --- and end with ...
+	All members of a list lines must begin with same indentation level starting with "-"
+ 
+---
+- hosts: deno
+- user : ansible
+- become: yes
+- connection: ssh 
+- gather_facts: yes
+
+ansible playbook target.yml 
+
+---
+- hosts: demo
+  user: ansadmin
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+          - name: Install HTTPD on server
+            action: yum name=httpd state=installed
+
+#####################
+---
+- hosts: demo
+  user: ansadmin
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  vars:
+          pkgname: httpd
+  tasks:
+          - name: Install HTTPD on server
+            action: yum name='{{pkgname}}' state=installed
+####################################
+Handlers Section  
+A handler is exactly the same as a task, but it will run when called by another taks
+Handlers are just like regular tasks in an ansible playbook, but they are only run if the task contains a notify directive and also indicates that it changed something.
+
+---
+- hosts: demo
+  user: ansadmin
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+          - name: Install HTTPD on server
+            action: yum name=httpd state=installed
+            notify: restart httpd
+  handlers:
+          - name: restart httpd
+            action: service name=httpd state=restarted
+
+
+
+###########################
+DRYRUN 
+ansible-playbook <playbook name> --check
+
+##############################################
+Loop 
+Sometimes you want to repeat a task multipe time

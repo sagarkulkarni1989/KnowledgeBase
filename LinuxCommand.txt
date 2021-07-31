@@ -68,6 +68,10 @@ Permissions are applied in 3 ways
 r = Read Only
 w = Write/edit/append/deleted
 x = Execute/run 
+read 4
+write 2
+execute 1
+
 file type
 - = Normal file
 b = Block file

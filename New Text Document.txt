@@ -1,0 +1,153 @@
+Regions : Independent Geographic Area
+Availability Zone: Multiple Isolated Locations/Data Centers within a region
+
+1] EC2 Amazon EC2 provides scalable computing capacity in the AWS cloud.Amazon EC2, you can develop and deploy applications quickly and effectively for a low cost.
+
+2] S3 stands for Simple Storage Service, with a simple web service interface to store and retrieve any amount of data from anywhere on the web.
+3] Amazon Glacier:  you can store the information effectively for months, years, or even decades.
+4] Amazon CloudFront: It speeds up the sharing of your dynamic and static web content such as .css, .html and image files to your users.
+5] AWS Lambada : Lambda is an event-driven platform. It is a compute service that runs code in respon
+6] Amazon VPC Using the Virtual Private Network, the data is secured because only authorized people can view the data. So, the information is not exposed to outside people or networks.
+7] Amazon ElastiCache: ElasticCache improves the memory performance by CPU Intensive Queries and Caching I/O queries in memory for quick results.
+8] Amazon RDS: It is a fully SQL database cloud service that allows users to operate and create relational databases
+9] DynamoDB: It is a fully managed NoSQL database service that supports document data structures and key values 
+that are offered by Amazon.com.  
+10] Amazon EBS [Elastic Block Store] EBS is an Amazon service, which is used to store persistent data, and it is block-level storage to use EC2 instances.
+AWS CloudTrail is a log of every single API call that has taken place inside your Amazon environment.
+
+What is Docker?
+Docker is a containerization technology that packages your application and all its dependencies together in the form of Containers to ensure that your application works seamlessly in any environment.
+What is Docker image?
+Docker image is the source of Docker container. Or in other words, Docker images are used to 
+create containers.
+What is a Docker Container?
+Docker Container is the running instance of Docker Image.
+
+
+
+AWS Compute Services
+EC2(Elastic Compute Cloud)
+AutoScaling
+Lambda
+ELB(Elastic Load Balancer) Distribute Incoming traffic 
+ECS(Elastic Container Service)
+
+Storage and Database Services
+EBS: Elastic Block Storage
+S3 Simple Storage Service
+EFS Elastic File System 
+RDS Relational Database Service
+DynamoDB AWS NoSQL Databse
+RedShift(Data Warehousing)
+ElasicCache(Fast and Flexible Caching)
+
+Network and Management Services
+VPC(VIrtual Private Cloud)
+Route53
+Cloud Front (Content Delivery Network)
+CloudWatch(Application and infrastructure Monitoring)
+CloudFormation(Provision Infrastructure as a code)
+Elastic Beanstalk(Application Orchestration Service)
+
+
+Ansible : 
+Control Node: Any Machine with Ansible installed. 
+Managed Nodes : The network device(Servers) you manage with Ansible 
+Inventory : A list of managed nodes.An inventory file is also sometimes called a 'hostfile'
+Modules : The units of code Ansible executes. Each modules has a particular functionality. 
+Tasks: The Unit of  action in Ansible.
+Playbooks: Ordered list of tasks.
+Ansible.cfg 
+ansible all -m command -a "uptime"  (we can provide any linux command)
+				  "ls -lrt"
+Roles are reusable subsets of a play. Playbooks contain Plays.
+Role is a set of tasks for accomplishing a certain role. Playbooks, Mapps among hosts and roles
+A play is an ordered set of tasks which should be run against hosts selected from your inventory.
+A playbook is a text file that contains a list of one or more plays to run in order.
+___________________________Ansible playbook Example ***Apache web server****************************
+---
+  - name: Playbook
+    hosts: webservers
+    become: yes
+    become_user: root
+    tasks:
+      - name: ensure apache is at the latest version
+        yum:
+          name: httpd
+          state: latest
+      - name: ensure apache is running
+        service:
+          name: httpd
+          state: started
+
+---
+  # Play1 - WebServer related tasks
+  - name: Play Web - Create apache directories and username in web servers
+    hosts: webservers
+    become: yes
+    become_user: root
+    tasks:
+      - name: create username apacheadm
+        user:
+          name: apacheadm
+          group: users,admin
+          shell: /bin/bash
+          home: /home/weblogic
+
+      - name: install httpd
+        yum:
+          name: httpd
+          state: installed
+        
+  # Play2 - Application Server related tasks
+  - name: Play app - Create tomcat directories and username in app servers
+    hosts: appservers
+    become: yes
+    become_user: root
+    tasks:
+      - name: Create a username for tomcat
+        user:
+          name: tomcatadm
+          group: users
+          shell: /bin/bash
+          home: /home/tomcat
+
+      - name: create a directory for apache tomcat
+        file:
+          path: /opt/oracle
+          owner: tomcatadm
+          group: users
+          state: present
+          mode: 0755
+
+___________________________________________________________________________________________Jenkins 
+
+
+pipeline{
+  agent any
+  stages{
+    stage("Git Checkout"){
+      steps{
+            git credentialsId: 'github', url: 'https://github.com/aditya-malviya/myweb.git'
+           }
+          }
+     stage("Maven Build"){
+       steps{
+            sh "mvn clean package"
+            sh "mv target/*.war target/myweb.war"
+             }
+            }
+     stage("deploy-dev"){
+       steps{
+          sshagent(['tomcat-dev1']) {
+          sh """
+          scp -o StrictHostKeyChecking=no target/myweb.war  
+          ubuntu@yourip:/opt/tomcat/webapps/
+          ssh ubuntu@yourip /opt/tomcat/bin/shutdown.sh
+          ssh ubuntu@yourip /opt/tomcat/bin/startup.sh
+           """
+            }
+          }
+        }
+      }
+    }
