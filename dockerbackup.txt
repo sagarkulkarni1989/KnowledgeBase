@@ -1,0 +1,144 @@
+******************************Docker Notes**********************************************8
+
+Definition of Microservices
+
+Microservices us that same type of applications become easier to build and maintain when they are broken down into smaller,composable pieces which work together.Each components is developed separately, and the application is then simply the sum of its constituent components.
+For emaple an online shop with separate microservices for user account, product catalog order processing and shopping carts.
+
+Hypervisor : Hypervisor is a piece of software or firmware that creates and run virtual machine. A hypervisor is sometimes also called virtual machine manager<VMM)
+Example : Hyper-V, VMware 
+Oracle VirtualBox
+
+Type og Hypervisor : 
+Type1(Bare metal)
+Type2 (Hosted Hypervisor)
+
+#######################################################
+What is Docker
+1] Docker is a tool to make it easier to create,deploy and run applications by using containers.
+2] Docker containers are lightweight alternatives to virtual Machines and its uses the host OS
+3] You dont have to pre-allocate any RAM in containers
+4] Docker is Advanced Version of Virtualization
+
+Docker Editions
+1] Community Editions
+2] Enterprise Editions
+
+Docker Image
+1] Read only Template used to create containers.
+2] Contains all application Dependencies
+3] Build by Docker Users
+4] Stored In Docker hub on your Local Registry
+
+Docker Container
+1] Isolated Application Platform
+2] Containes Everything Need to Run The Application.
+3] Share same OS
+
+################################Installation Steps ##################################3
+Linux Machine 
+sudo yum update -y
+sudo amazon-linux-extras install docker
+sudo yum install docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user  (Add the ec2-user to the docker group so you can execute Docker commands without using sudo.)
+docker info
+
+##################Docker Architecture #############################
+
+
+#####################Docker Basic Commands ###########################
+docker --version
+docker --help
+docker pull
+docker run 
+docker build 
+docker stop shutdown gracefully by waiting for other dependencies to shut
+docker kill force kill 
+docker commit : this command creates a new image of an edited container on the local repo.
+docker commit container name <new image name>
+docker export : This command is used to export a Docker image into a tar file in your local system.
+docker export --output="latest.tar" mycontainer
+docker import: This is used to import the contents of tar file(usually docker image) into your local repo
+docker import <tar location>
+docker compose: This command is used to power multi container applications where varous services will be hosted inside different containers.
+docker-compose build
+docker-compose up
+
+docker login 
+docker tag <image name> 
+
+#################### DockerFile ######################################
+
+RUN : Its always executes in a new layer and creates a new image layer
+
+###################Docker Storage ###################################
+
+###############################Docker Compose 
+Docker Compose makes it easier to configure and run applications made up of multiple containers.
+You can run containers with a single command
+
+
+#############Docker swarm
+
+#########################Networking######################
+network drivers
+BRIDE: 
+It is a private default network created on the host
+Containers linked to this network 
+
+HOST:
+It is a public nework
+It utilizes the host's IP address and TCP port space in order to display the services running inside the containers.
+Container doesnot get its own IP address allocated
+
+OVERLAY
+This is utilized for creating an internal private network to the Docker nodes in the Docker swarm cluster
+
+docker network connect : connect a container to a network
+docker network create : create a network
+docker network disconnect: disconnect a container from network
+docker network inspect: Display detained information on one or more networks
+docker network ls : list netowrks
+docker network prune: Remove all unused networks
+docker network rm : Remove one or more networks
+
+
+
+Docker file example"
+
+FROM tomcat:latest
+Maintainer:
+ADD ./target/app.war /usr/local/tomcat/webapps
+EXPOSE 8080
+CMD ["catalina.sh" "run"]
+
+Jenkins Pipeline 
+pipeline {
+agent any
+	tools
+	{
+	 maven "maven"
+	}
+ stages {
+		stage (checkput)
+		 steps{
+		git branch:master , url:''
+		stage (execute maven)
+		steps
+		  sh "mvn package"
+	stage (docker build and tag)
+		sh docker build -t samplewebapp:latest;
+		sh "docker tag sampleapp sagarkulkarni1989/samplewebapp:latest"
+		
+	stage(publish image to docker hub)
+	steps
+		docker push sagarkulkarni1989/samplewebapp
+stage(Run docker on jenkins agent)
+	steps	
+	sh "docker run -d -p 8003:8080 sagarkulkarni1989/samplewebapp"
+	
+ }
+
+
+ 

@@ -1,0 +1,33 @@
+Software Testing is a part of software development lifecycle,its aim is to ensure that the code to be deployed is of high quality with no bugs and no critical errors.
+
+Testing Levels
+	Unit 
+	Integration
+	System
+	Acceptance
+Static Testing 
+	It is a method of debugging by examining source code before program is run.It does so by analyzing the code agaist a pre-set of coding rules and ensure that it confirms to the guidelines
+Reasons to use static code Analysis
+	Finds errors earlier development
+	Detect overcomplexity in code
+	Find Security Errors
+	Enforce best coding practice
+	Automated & integrated in jenkins 
+SonarQube 
+	Its an open source static testing analysis software.it is used by developers to manage source code quality and consistency.
+	Potentials Logs
+	Code Defect to design inefficiencies
+	Code Duplication
+	Lack of test coverage
+Features of SonarQube
+	Detect Bugs
+	Code Smell
+	Security Vulnerability
+	Activate Rules needed
+
+Update the sonar.config.properties file
+mvn sonar:sonar
+	-Dsonar:projectkey=sample
+	-Dsonar:host.url
+	-Dsonar:login
+	

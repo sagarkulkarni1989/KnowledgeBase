@@ -179,3 +179,65 @@ ansible-playbook <playbook name> --check
 ##############################################
 Loop 
 Sometimes you want to repeat a task multipe time
+
+######################################################
+Condition 
+Wheever we have a different different scenario, we put condition accordigly to scenario
+
+###################################################################
+Ansible Vault 
+Ansible Allows keeping Sensitive data such as password or key in encrypted files rather than a plaintext in your playbooks
+
+Creating a new encrypted playbook 
+	ansible-vault create vault.yml
+Edit the encrypted playbook 
+	ansible-vault edit vault.yml
+To change the password
+	ansible-vault rekey vault.yml
+To encrypt an existing playbook 
+	ansible-vault encrypt target.yml 
+To Decrypt an encrypted playbook
+	ansible-vault decrypt target.yml 
+##########################################################################
+Roles 
+We can use two techniques for reusing a set of tasks 
+Roles are good for organising tasks and encapsulating data needed to accomplish those tasks
+Ansible roles: Default,Files,Handlers,Meta,Template,Tasks,var
+We can Organise playbooks into a directory strucure called roles
+master.yml 
+
+
+***********************************************************
+Patching using Ansible playbook
+1] Verify the application/database processes are running or not 
+2] Decision point to start patching
+3] copy the required repo file to the managed hosts
+4] upgrade the kernel or package 
+5] Check if reboot is required or not 
+6] Reboot the system 
+
+host: patching 
+become:true
+become_user: root
+tasks:
+	- name: Verify app/databse are running or not
+	  shell: if ps -eaf | egrep 'httpd' | grep -v grep > /dev/null; then echo 'process running'; else echo 'process not running' ; fi
+          ignore_errors: true
+	  register: app_proc_check
+          debug: msg {{appr proc check.stdout}}
+	- name: Decition point to start patching
+          fail:
+		msg={{inventory_hostname }} having running application, 
+	  when:app_proc_check.stdout== "process running"
+	-copy:
+		src:/home/kernel.repo
+		dest: /etc/yum.repos.d/
+	- name: current kernel version
+	   shell: uname -r
+	   register: curr_ker
+	   - name: initializing patching
+	   yum:
+		name:kernel
+		state:latest
+	   register:yum_update
+	   debug: msg="kernel has been updated"

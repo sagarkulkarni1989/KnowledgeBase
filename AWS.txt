@@ -78,3 +78,5 @@ Cloud Watch events helps us to monitor application status of various AWS service
 7] How do you monitor Amazon VPC?
 	Cloud watch and cloudwatch Logs
 	VPC Flow Logs
+
+AWS Elasic Beanstalk is an PAAS service used for deploying and scaling web applications and services developed with Java , .NET, node.js on familiar servers such as apache Nginx Tomcat and IIS.

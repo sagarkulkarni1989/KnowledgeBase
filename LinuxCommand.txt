@@ -10,7 +10,12 @@ root is a super user
 /bin = it contains commands used by all users 
 /sbin = it contains commands used by super user(root)
 /var = it contains variable data like mails, log
+/dev = device file
+/etc= system wide configuration files
+/media = mounth point
+/opt= optional application software packages
 
+cd s	
 
 *********Basic Commands***************
 Date: Current date and time 
@@ -115,7 +120,8 @@ init 6   restart system
 ping <ip> Availability of Destination server over the network
 wget  Download packages/softwares onto Linux System
 ifconfig List ip address of the server
-telnet connect to remote host /check port availability status
+telnet connect to remote host /check por:q!
+t availability status
 telnet localhost 22  instead of localhost you can give ipaddress of server
 
 **********************Crontab ****************
@@ -222,3 +228,30 @@ Command : ln <src file> <dest_file>
 
 **************Copy files between servers 
 SCP (Secure Copy) is a command line utility that allows you to securely copy files and directories between two systems.
+
+grep : 
+GREP is a multi-purpose file search tool that uses Regular Expressions. The grep stands for “global regular expression print,” processes text line by line, and prints any lines which match a specified pattern. 
+grep [options] patterns (files)
+
+cut
+The CUT command is a command-line tool for cutting data from each line of files and writing the result to standard output.
+The cut command is a powerful tool to extract parts of each line of a file.(It is called slicing of a string)
+cut options <range of bytes/char/fields> file
+cut -b/-c/-f range of bytes filename 
+cut -c 2-8 mytext.txt
+
+awk 
+A text pattern scanning and processing language, 
+
+sed 
+sed performs basic text transformations on an input stream (a file or input from a pipeline) in a 
+single pass through the stream
+Functions of sed command on a file 
+	viewing file content
+	Searching 
+	Find and Replace 
+	Insertion or deletion
+sed also supports regular expression which allows it perform complex pattern matching 
+sed [options] 'commands' filename
+command (i insert a= insert after d =delete)
+sed -i '/sagar/a name' mytext.txt

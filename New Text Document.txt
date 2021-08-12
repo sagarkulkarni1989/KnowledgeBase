@@ -151,3 +151,51 @@ pipeline{
         }
       }
     }
+
+
+
+
+
+
+[root@ip-172-31-20-5 code]# git log --oneline
+5f6d270 (HEAD -> two, one) ddd
+aeb0778 (rechecking, master) added new file
+375d68a Resolved conflict
+ccd8b8e added new file Nihira hre
+9c69eed (Branch1) aded Nihira file
+7f38b6d merge conflict resolved
+982b262 added
+27ffd9b practice for stash command
+770bee4 resolved merge conflict
+e56f3ba assed
+9b8f940 added rajputfile
+7d4f1c5 (origin/master) Second Commit from Branch1
+7811aae added new file one Branch1
+bb49d58 (origin/main) Create features
+b11baf1 added one new line
+6a33057 added first index file
+8f9a473 Initial commit
+
+
+
+
+
+
+d562c4f (HEAD -> four, three) added new fike
+5f6d270 (two, one) ddd
+aeb0778 (rechecking, master) added new file
+375d68a Resolved conflict
+ccd8b8e added new file Nihira hre
+9c69eed (Branch1) aded Nihira file
+7f38b6d merge conflict resolved
+982b262 added
+27ffd9b practice for stash command
+770bee4 resolved merge conflict
+e56f3ba assed
+9b8f940 added rajputfile
+7d4f1c5 (origin/master) Second Commit from Branch1
+7811aae added new file one Branch1
+bb49d58 (origin/main) Create features
+b11baf1 added one new line
+6a33057 added first index file
+8f9a473 Initial commit
