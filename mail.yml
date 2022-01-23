@@ -1,0 +1,31 @@
+    - name: set file count
+      set_fact: 
+        total: "{{ total1.stdout_lines }}"
+
+    - name: create a file
+      file:
+        path: "{{ item }}"
+        state: touch
+      loop: "{{ file_names }}"
+
+    - name: count number of file in {{ tpath }}
+      shell:
+        cmd: ls /home/*.txt | wc -l
+      register: count_files
+      
+    - name: print number of file in {{ tpath }}
+      debug:
+        msg: "{{ count_files.stdout_lines }}"
+      register: count_files1
+
+    - name: total count number of file in {{ tpath }}
+      set_fact:
+        total_files: "{{ count_files1.msg }}" 
+
+    - name: print number of file before creation in {{ tpath }}
+      debug:
+        msg: "{{ file_count }} on host {{ inventory_hostname }}"
+
+    - name: print number of files post creation in {{ tpath }}
+      debug: 
+        msg: "{{ total_files }} on host {{ inventory_hostname }}"
